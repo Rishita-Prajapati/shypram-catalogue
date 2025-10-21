@@ -13,7 +13,7 @@ export function Logo({ className = "", width = 40, height = 40 }: LogoProps) {
   return (
     <div className={`bg-white rounded-sm p-1 ${className}`}>
       <Image
-        src="/LOGO.png"
+        src="/shypram-catalogue/LOGO.png"
         alt="Shypram Rubber Profile Pvt. Ltd. Logo"
         width={width}
         height={height}

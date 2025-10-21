@@ -6,7 +6,7 @@
   "scripts": {
     "build": "next build",
     "export": "next build",
-    "deploy": "npm run build && npx gh-pages -d .next",
+    "deploy": "npm run build && npx gh-pages -d out",
     "dev": "next dev --port 3001 --turbo",
     "dev:verbose": "next dev --port 3001 --turbo",
     "dev:open": "npm run kill-port && start http://localhost:3001 && npm run dev",
