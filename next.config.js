@@ -2,6 +2,8 @@
 const nextConfig = {
   output: 'export',
   trailingSlash: true,
+  basePath: '/shypram-catalogue',
+  assetPrefix: '/shypram-catalogue/',
   reactStrictMode: true,
   experimental: {
     optimizePackageImports: ['lucide-react'],
