@@ -14,31 +14,29 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '18'
+        node-version: '20'
         cache: 'npm'
     
     - name: Install dependencies
-      run: npm ci
+      run: npm install --legacy-peer-deps
     
     - name: Build
       run: |
-        echo "Starting build process..."
-        npm run build
-        echo "Build completed. Checking output directory..."
-        ls -la
-        if [ -d "out" ]; then
-          echo "Output directory exists:"
-          ls -la out/
-        else
-          echo "Output directory does not exist!"
-          exit 1
-        fi
+        echo "Node version: $(node --version)"
+        echo "NPM version: $(npm --version)"
+        echo "Starting build..."
+        NODE_ENV=production npm run build
     
-    - name: Add .nojekyll file
-      run: touch ./out/.nojekyll
+    - name: List files
+      run: |
+        echo "Root directory:"
+        ls -la
+        echo "Out directory:"
+        ls -la out/ || echo "No out directory found"
     
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./out
+        force_orphan: true

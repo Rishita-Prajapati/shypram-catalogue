@@ -12,7 +12,10 @@ import Link from "next/link"
 export const dynamic = 'force-static'
 
 export async function generateStaticParams() {
-  return []
+  const { products } = await import('@/lib/products-data')
+  return products.map((product) => ({
+    id: product.id,
+  }))
 }
 
 interface ProductPageProps {
