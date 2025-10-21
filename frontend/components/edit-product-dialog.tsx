@@ -26,7 +26,7 @@ export function EditProductDialog({ product, open, onOpenChange }: EditProductDi
     description: "",
     pricePerKg: "",
     minOrderQuantity: "",
-    availability: "in-stock" as const,
+    availability: "in-stock" as "in-stock" | "made-to-order" | "out-of-stock",
     imageUrl: ""
   })
 

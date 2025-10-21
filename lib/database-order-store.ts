@@ -43,7 +43,7 @@ export class DatabaseOrderStore {
     } catch (error) {
       console.error('Full error object:', error)
       console.error('Error type:', typeof error)
-      console.error('Error constructor:', error.constructor.name)
+      console.error('Error constructor:', (error as any)?.constructor?.name)
       
       if (error instanceof Error) {
         throw new Error(`Database error: ${error.message}`)

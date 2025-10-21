@@ -29,7 +29,7 @@ export function CategoryGrid() {
             {categoryProducts.length > 0 && (
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
                 {categoryProducts.map((product) => (
-                  <ProductCard key={product.id} product={product} compact={true} />
+                  <ProductCard key={product.id} product={product} />
                 ))}
               </div>
             )}

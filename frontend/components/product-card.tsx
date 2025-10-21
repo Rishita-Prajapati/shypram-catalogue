@@ -41,7 +41,7 @@ export function ProductCard({ product }: ProductCardProps) {
     })
   }
 
-  const getAvailabilityColor = (availability: string) => {
+  const getAvailabilityColor = (availability?: string) => {
     switch (availability) {
       case "in-stock":
         return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300"

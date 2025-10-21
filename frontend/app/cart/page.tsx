@@ -13,6 +13,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { useCartStore } from "@/lib/cart-store"
 import { DatabaseOrderStore } from "@/lib/database-order-store"
 import { useToast } from "@/hooks/use-toast"
+import type { ProductCategory } from "@/lib/types"
 import { Trash2, Package, ShoppingBag } from "lucide-react"
 import Image from "next/image"
 
@@ -67,11 +68,14 @@ export default function CartPage() {
         customerInfo,
         items: items.map(item => ({
           productId: item.id,
-          product: item,
+          product: {
+            ...item,
+            category: item.category as ProductCategory
+          },
           cuttingQuantity: item.cuttingQuantity
         })),
-        packagingOption,
-        finalPackaging,
+        packagingOption: packagingOption as "plain" | "printed",
+        finalPackaging: finalPackaging as "box" | "bag",
         packagingDetails,
         totalAmount: 0,
         status: "pending",

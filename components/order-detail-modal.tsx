@@ -35,7 +35,7 @@ export function OrderDetailModal({ order, isOpen, onClose }: OrderDetailModalPro
     }
   }
 
-  const totalQuantity = order.items.reduce((sum, item) => sum + item.cuttingQuantityKg, 0)
+  const totalQuantity = order.items.reduce((sum, item) => sum + item.cuttingQuantity, 0)
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -86,9 +86,7 @@ export function OrderDetailModal({ order, isOpen, onClose }: OrderDetailModalPro
                 <div>
                   <h4 className="font-semibold text-lg">{order.customerInfo.companyName}</h4>
                   <p className="text-muted-foreground">{order.customerInfo.contactPerson}</p>
-                  {order.customerInfo.gstNumber && (
-                    <p className="text-sm text-muted-foreground">GST: {order.customerInfo.gstNumber}</p>
-                  )}
+
                 </div>
                 <div className="space-y-2">
                   <div className="flex items-center gap-2">
@@ -129,9 +127,9 @@ export function OrderDetailModal({ order, isOpen, onClose }: OrderDetailModalPro
                       <h4 className="font-semibold">{item.product.name}</h4>
                       <p className="text-sm text-muted-foreground">{item.product.description}</p>
                       <div className="flex items-center gap-4 mt-2 text-sm">
-                        <span>Quantity: {item.cuttingQuantityKg}kg</span>
-                        <span>Unit Price: ₹{item.product.pricePerKg}/kg</span>
-                        <span className="font-semibold">Total: ₹{item.totalPrice.toLocaleString()}</span>
+                        <span>Quantity: {item.cuttingQuantity}kg</span>
+                        <span>Unit Price: ₹{item.product.pricePerKg || 0}/kg</span>
+                        <span className="font-semibold">Total: ₹{((item.product.pricePerKg || 0) * item.cuttingQuantity).toLocaleString()}</span>
                       </div>
                     </div>
                   </div>
@@ -144,7 +142,7 @@ export function OrderDetailModal({ order, isOpen, onClose }: OrderDetailModalPro
                 <div>
                   <p className="text-sm text-muted-foreground">Total Quantity: {totalQuantity}kg</p>
                   <p className="text-sm text-muted-foreground">
-                    Packaging: {order.packagingOption === "standard" ? "Standard" : "Custom"}
+                    Packaging: {order.packagingOption === "plain" ? "Plain" : "Printed"}
                   </p>
                 </div>
                 <div className="text-right">
@@ -155,24 +153,16 @@ export function OrderDetailModal({ order, isOpen, onClose }: OrderDetailModalPro
           </Card>
 
           {/* Additional Information */}
-          {(order.packagingNotes || order.notes) && (
+          {order.notes && (
             <Card>
               <CardHeader>
                 <CardTitle>Additional Information</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                {order.packagingNotes && (
-                  <div>
-                    <h4 className="font-semibold mb-2">Packaging Notes</h4>
-                    <p className="text-sm text-muted-foreground">{order.packagingNotes}</p>
-                  </div>
-                )}
-                {order.notes && (
-                  <div>
-                    <h4 className="font-semibold mb-2">Order Notes</h4>
-                    <p className="text-sm text-muted-foreground">{order.notes}</p>
-                  </div>
-                )}
+              <CardContent>
+                <div>
+                  <h4 className="font-semibold mb-2">Order Notes</h4>
+                  <p className="text-sm text-muted-foreground">{order.notes}</p>
+                </div>
               </CardContent>
             </Card>
           )}

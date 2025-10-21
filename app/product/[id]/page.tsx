@@ -1,6 +1,4 @@
-"use client"
-
-import { useParams } from "next/navigation"
+import { notFound } from "next/navigation"
 import Image from "next/image"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
@@ -11,27 +9,21 @@ import { ArrowLeft, Phone, Mail } from "lucide-react"
 import { getProductById } from "@/lib/mock-data"
 import Link from "next/link"
 
-export default function ProductPage() {
-  const params = useParams()
-  const productId = params.id as string
+export async function generateStaticParams() {
+  return []
+}
+
+interface ProductPageProps {
+  params: Promise<{ id: string }>
+}
+
+export default async function ProductPage({ params }: ProductPageProps) {
+  const { id } = await params
+  const productId = id
   const product = getProductById(productId)
 
   if (!product) {
-    return (
-      <div className="min-h-screen flex flex-col">
-        <Header />
-        <main className="flex-1 flex items-center justify-center">
-          <div className="text-center">
-            <h1 className="text-2xl font-bold mb-4">Product Not Found</h1>
-            <p className="text-muted-foreground mb-6">The product you're looking for doesn't exist.</p>
-            <Link href="/catalogue">
-              <Button>Back to Catalogue</Button>
-            </Link>
-          </div>
-        </main>
-        <Footer />
-      </div>
-    )
+    notFound()
   }
 
 

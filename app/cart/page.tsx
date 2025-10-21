@@ -14,6 +14,7 @@ import { useCartStore } from "@/lib/cart-store"
 import { DatabaseOrderStore } from "@/lib/database-order-store"
 import { testSupabaseConnection } from "@/lib/test-supabase"
 import { useToast } from "@/hooks/use-toast"
+import type { ProductCategory } from "@/lib/types"
 import { Trash2, Package, ShoppingBag } from "lucide-react"
 import Image from "next/image"
 
@@ -89,11 +90,14 @@ export default function CartPage() {
         customerInfo,
         items: items.map(item => ({
           productId: item.id,
-          product: item,
+          product: {
+            ...item,
+            category: item.category as ProductCategory
+          },
           cuttingQuantity: item.cuttingQuantity
         })),
-        packagingOption,
-        finalPackaging,
+        packagingOption: packagingOption as "plain" | "printed",
+        finalPackaging: finalPackaging as "box" | "bag",
         packagingDetails,
         totalAmount: 0,
         status: "pending",
@@ -117,7 +121,7 @@ export default function CartPage() {
         throw new Error("Failed to create order")
       }
       
-    } catch (error) {
+    } catch (error: any) {
       console.error("Order submission error:", error)
       console.error("Error message:", error?.message || 'Unknown error')
       console.error("Error stack:", error?.stack || 'No stack trace')

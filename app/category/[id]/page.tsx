@@ -1,17 +1,29 @@
-"use client"
-
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { ProductCard } from "@/components/product-card"
 import { mockProducts, categories } from "@/lib/mock-data"
 import type { ProductCategory } from "@/lib/types"
 
-interface CategoryPageProps {
-  params: { id: string }
+export async function generateStaticParams() {
+  return [
+    { id: 'alluminium-doors-windows-gasket' },
+    { id: 'container-gasket' },
+    { id: 'facade-rubber-gasket' },
+    { id: 'profiles-alluminium-doors-windows' },
+    { id: 'profiles-u-clamp-c-clamp' },
+    { id: 'railing-rubber-gasket' },
+    { id: 'sliding-folding-rubber-gasket' },
+    { id: 'upvc-door-window-gasket' }
+  ]
 }
 
-export default function CategoryPage({ params }: CategoryPageProps) {
-  const categoryId = params.id as ProductCategory
+interface CategoryPageProps {
+  params: Promise<{ id: string }>
+}
+
+export default async function CategoryPage({ params }: CategoryPageProps) {
+  const { id } = await params
+  const categoryId = id as ProductCategory
   const category = categories.find(c => c.id === categoryId)
   const products = mockProducts.filter(p => p.category === categoryId)
 

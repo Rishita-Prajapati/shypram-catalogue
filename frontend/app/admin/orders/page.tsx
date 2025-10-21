@@ -50,8 +50,7 @@ export default function AdminOrdersPage() {
   }
 
   const handleExportCSV = () => {
-    const timestamp = new Date().toISOString().split("T")[0]
-    exportOrdersToCSV(filteredOrders, `orders-${timestamp}.csv`)
+    exportOrdersToCSV(filteredOrders)
     
     toast({
       title: "Export Successful",

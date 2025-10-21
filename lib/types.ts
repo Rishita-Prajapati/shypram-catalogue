@@ -20,6 +20,7 @@ export interface Product {
   pricePerKg?: number
   minOrderQuantity?: number
   availability?: "in-stock" | "made-to-order" | "out-of-stock"
+  specifications?: string[]
 }
 
 // Cart item interface
