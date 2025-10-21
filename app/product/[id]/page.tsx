@@ -9,6 +9,8 @@ import { ArrowLeft, Phone, Mail } from "lucide-react"
 import { getProductById } from "@/lib/mock-data"
 import Link from "next/link"
 
+export const dynamic = 'force-static'
+
 export async function generateStaticParams() {
   return []
 }
