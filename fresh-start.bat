@@ -1,0 +1,13 @@
+@echo off
+echo 🧹 Cleaning up for fresh start...
+
+echo 🔄 Killing any process on port 3001...
+npx kill-port 3001 2>nul
+
+echo 🗑️ Clearing Next.js cache...
+rmdir /s /q .next 2>nul
+
+echo 🚀 Starting fresh development server with verbose output...
+echo 📝 All code changes will appear in terminal and browser!
+start "" "http://localhost:3001"
+npm run dev:verbose
